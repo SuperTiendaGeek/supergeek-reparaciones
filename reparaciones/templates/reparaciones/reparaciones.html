@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Órdenes | Super Tienda Geek</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap">
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #ff0;
+            margin-top: 50px;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background: #222;
+            box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.5);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ff0;
+        }
+        th {
+            background: #ff0;
+            color: #000;
+        }
+        tr:nth-child(even) {
+            background: #333;
+        }
+        .logout {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .logout:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mis Órdenes de Reparación</h1>
+    <table>
+        <tr>
+            <th>Código</th>
+            <th>Artículo</th>
+            <th>Problema</th>
+            <th>Fecha de Ingreso</th>
+        </tr>
+        {% for orden in ordenes %}
+        <tr>
+            <td>{{ orden.codigo }}</td>
+            <td>{{ orden.item }}</td>
+            <td>{{ orden.problema }}</td>
+            <td>{{ orden.fecha_ingreso }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No tienes órdenes registradas.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a class="logout" href="{% url 'logout' %}">Cerrar Sesión</a>
+</body>
+</html>
