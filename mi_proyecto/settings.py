@@ -11,24 +11,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# ✅ Definición correcta de BASE_DIR usando pathlib
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# ✅ Seguridad: No expongas tu SECRET_KEY en producción
 SECRET_KEY = 'django-insecure-j2er4k^=*7(-*xn47c$)1%5)^@oi6))z#2=oxa-u=p(m8^0o%d'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# ✅ Importante: Desactivar DEBUG en producción
+DEBUG = False  # Cambia a False cuando lo pongas en producción
 
+# ✅ Agrega todos los dominios permitidos
 ALLOWED_HOSTS = ["supergeek-reparaciones.onrender.com", "app.supertiendageek.com", "ordenes.supertiendageek.com"]
 
-# Application definition
-
+# ✅ Aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,14 +44,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Para servir archivos estáticos en Render
 ]
 
 ROOT_URLCONF = 'mi_proyecto.urls'
 
+# ✅ Configuración de plantillas corregida
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "reparaciones/templates"],  # Ruta de plantillas
+        'DIRS': [os.path.join(BASE_DIR, "reparaciones", "templates")],  # ✅ Corrección aquí
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,13 +66,9 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'mi_proyecto.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# ✅ Configuración de base de datos (usa SQLite en desarrollo)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -81,44 +76,33 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# ✅ Validadores de contraseña
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+# ✅ Configuración de idioma y zona horaria
+LANGUAGE_CODE = 'es-ec'
+TIME_ZONE = 'America/Guayaquil'
 USE_I18N = True
-
 USE_TZ = True
 
+# ✅ Configuración de archivos estáticos
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Para deploy en Render
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),  # Directorio local de archivos estáticos
+#]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+# ✅ Configuración adicional para servir archivos estáticos correctamente en producción
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_URL = 'static/'
+# ✅ Configuración para archivos subidos por usuarios
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# ✅ Identificador de clave primaria predeterminado
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
