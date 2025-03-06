@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-j2er4k^=*7(-*xn47c$)1%5)^@oi6))z#2=oxa-u=p(m8^0o%d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["supergeek-reparaciones.onrender.com", "app.supertiendageek.com"]
+ALLOWED_HOSTS = ["supergeek-reparaciones.onrender.com", "app.supertiendageek.com", "ordenes.supertiendageek.com"]
 
 # Application definition
 
