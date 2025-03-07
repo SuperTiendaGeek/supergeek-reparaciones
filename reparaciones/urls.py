@@ -5,6 +5,7 @@ from .views import ordenes_cliente
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from . import views
 
 def logout_view(request):
     logout(request)
@@ -17,5 +18,7 @@ urlpatterns = [
     path('mis-ordenes/', ordenes_cliente, name='mis_ordenes'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/login/'), name='logout'),
     path('logout/', logout_view, name='logout'),
+    path('ordenes/', views.ordenes_cliente, name='ordenes'),
+    path('ordenes/<int:orden_id>/', views.detalle_orden, name='detalle_orden'),
 ]
 

@@ -50,3 +50,11 @@ class OrdenReparacion(models.Model):
 
     def __str__(self):
         return f"Orden {self.codigo} - {self.item}"
+    
+class ActualizacionOrden(models.Model):
+    orden = models.ForeignKey(OrdenReparacion, related_name="actualizaciones", on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    descripcion = models.TextField()
+
+    def __str__(self):
+        return f"{self.orden.codigo} - {self.fecha}"

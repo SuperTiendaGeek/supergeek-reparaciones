@@ -94,8 +94,7 @@ USE_TZ = True
 # ✅ Configuración de archivos estáticos
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Para deploy en Render
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),  # Directorio local de archivos estáticos
-#]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ✅ Configuración adicional para servir archivos estáticos correctamente en producción
 if not DEBUG:
@@ -108,7 +107,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # ✅ Identificador de clave primaria predeterminado
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configuración de archivos estáticos
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+

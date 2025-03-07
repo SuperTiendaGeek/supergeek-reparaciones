@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages  # Para mostrar mensajes de error
 from django.contrib.auth.decorators import login_required
 from .models import OrdenReparacion, Cliente
+from django.shortcuts import render, get_object_or_404
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -41,3 +43,11 @@ def ordenes_cliente(request):
     """Muestra las órdenes del cliente autenticado."""
     ordenes = OrdenReparacion.objects.filter(cliente__user=request.user)
     return render(request, 'ordenes.html', {'ordenes': ordenes})
+
+def ordenes_cliente(request):
+    ordenes = OrdenReparacion.objects.filter(cliente=request.user)
+    return render(request, 'ordenes.html', {'ordenes': ordenes})
+
+def detalle_orden(request, orden_id):
+    orden = get_object_or_404(OrdenReparacion, id=orden_id, cliente=request.user)
+    return render(request, 'detalle_orden.html', {'orden': orden})

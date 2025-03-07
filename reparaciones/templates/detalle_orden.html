@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la Orden</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: yellow;
+        }
+        .info {
+            text-align: left;
+            padding: 10px;
+            background-color: #111;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: yellow;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Detalles de la Orden #{{ orden.codigo }}</h1>
+
+    <div class="container">
+        <p><strong>Item:</strong> {{ orden.item }}</p>
+        <p><strong>Problema Reportado:</strong> {{ orden.problema }}</p>
+        <p><strong>Accesorios Entregados:</strong> {{ orden.accesorios }}</p>
+        <p><strong>Estado:</strong> {{ orden.estado }}</p>
+        <p><strong>Fecha de Ingreso:</strong> {{ orden.fecha_ingreso }}</p>
+        <h2>Historial de Reparación</h2>
+        <ul>
+            {% for actualizacion in orden.actualizaciones.all %}
+                <li>{{ actualizacion.fecha }} - {{ actualizacion.descripcion }}</li>
+            {% empty %}
+                <p>No hay actualizaciones aún.</p>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'ordenes' %}" class="btn">Volver a Mis Órdenes</a>
+    </div>
+
+</body>
+</html>
